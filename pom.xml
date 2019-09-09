@@ -8,7 +8,7 @@
   <packaging>jar</packaging>
   <name>${project.artifactId}</name>
   <version>0.0.1-SNAPSHOT</version>
-  <description>RakutenAPI</description>
+  <description>AsaRaku</description>
 
   <properties>
     <maven.compiler.encoding>UTF-8</maven.compiler.encoding>
@@ -19,6 +19,12 @@
     <springfox.version>2.4.0</springfox.version>
     <failOnMissingWebXml>false</failOnMissingWebXml>
   </properties>
+
+  <parent>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-parent</artifactId>
+    <version>1.3.5.RELEASE</version>
+  </parent>
 
   <build>
     <finalName>${project.artifactId}</finalName>
@@ -54,7 +60,7 @@
       <artifactId>product-advertising-api-sdk</artifactId>
       <version>2011.08.01</version>
       <scope>system</scope>
-      <systemPath>${basedir}/WebContent/WEB-INF/lib/product-advertising-api-sdk.jar</systemPath>
+      <systemPath>${basedir}/src/main/webapp/WEB-INF/lib/product-advertising-api-sdk.jar</systemPath>
     </dependency>
 
     <dependency>
@@ -62,7 +68,7 @@
       <artifactId>yahoo-developers-api-sdk</artifactId>
       <version>1.0.0</version>
       <scope>system</scope>
-      <systemPath>${basedir}/WebContent/WEB-INF/lib/yahoo-developers-api-sdk.jar</systemPath>
+      <systemPath>${basedir}/src/main/webapp/WEB-INF/lib/yahoo-developers-api-sdk.jar</systemPath>
     </dependency>
 
     <dependency>
@@ -77,6 +83,12 @@
       <version>${spring.framework.boot.version}</version>
       <scope>provided</scope>
     </dependency>
+    <dependency>
+      <groupId>org.apache.tomcat.embed</groupId>
+      <artifactId>tomcat-embed-jasper</artifactId>
+      <scope>provided</scope>
+    </dependency>
+
 
     <dependency>
       <groupId>org.springframework.boot</groupId>
@@ -94,6 +106,16 @@
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>
       <version>1.16.8</version>
+    </dependency>
+
+    <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>javax.servlet-api</artifactId>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>jstl</artifactId>
     </dependency>
   </dependencies>
 

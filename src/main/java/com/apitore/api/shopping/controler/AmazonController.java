@@ -31,7 +31,7 @@ import springfox.documentation.annotations.ApiIgnore;
 
 
 /**
- * @author Keigo Hattori
+ * @author ASATECX
  */
 @RestController
 @RequestMapping(value = "/amazon")

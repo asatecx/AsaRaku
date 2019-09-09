@@ -24,7 +24,7 @@ import yahoo.jp.itemsearch.ResultSet;
 
 
 /**
- * @author Keigo Hattori
+ * @author ASATECX
  */
 @RestController
 @RequestMapping(value = "/yahoo")

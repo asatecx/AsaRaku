@@ -13,7 +13,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 
 /**
- * @author Keigo Hattori
+ * @author ASATECX
  */
 @Configuration
 @EnableSwagger2
