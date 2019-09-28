@@ -1,0 +1,37 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<title>楽天商品検索</title>
+	<!-- meta-tags -->
+	<meta name="viewport" content="width=device-width, initial-scale=1"/>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="keywords" content="" />
+</head>
+
+<body>
+	<!-- //short-->
+<!-- 	<form action="${pageContext.request.contextPath}/rakuten/IchibaItem/Search" method="post"> -->
+	<form action="#" th:action="@{/rakuten/IchibaItem/Search}" method="post">
+		<div>
+			<p>検索キーワード </p>
+			<input type="text" name="keyword" required="" />
+		</div>
+		<div class="">
+			<p>ジャンルID</p>
+			<input type="text" name="genreId" required="" />
+		</div>
+		<div>
+			<p th:text="'Hello！, ' + ${name} + '!'">3333</p>
+			<p th:text="'Hello！, ' + ${strJson} + '!'">3333</p>
+			<p id="demo"/>
+
+		</div>
+		<input type="submit" value="検索"/>
+	</form>
+			<script th:inline="javascript">
+			var out_trade_no = JSON.parse([[${strJson}]]);
+			document.getElementById("demo").innerHTML = out_trade_no.tel.tel2;
+			</script>
+</body>
+
+</html>

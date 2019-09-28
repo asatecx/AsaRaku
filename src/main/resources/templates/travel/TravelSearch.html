@@ -1,0 +1,67 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<title>楽天トラベル検索</title>
+	<!-- meta-tags -->
+	<meta name="viewport" content="width=device-width, initial-scale=1"/>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="keywords" content="" />
+</head>
+
+<body>
+	<!-- //short-->
+<!-- 	<form action="${pageContext.request.contextPath}/rakuten/IchibaItem/Search" method="post"> -->
+	<form action="#" th:action="@{/rakutenTravel/Travel/SimpleHotelSearch}" method="post">
+		<div>
+			<p>国</p>
+			<input type="text" name="largeClassCode" required="" />
+		</div>
+		<div>
+			<p>都道府県</p>
+			<input type="text" name="middleClassCode" required="" />
+		</div>
+		<div>
+			<p>市町村</p>
+			<input type="text" name="smallClassCode" required="" />
+		</div>
+<!-- 		<div>
+			<p>区</p>
+			<input type="text" name="detailClassCode" required="" />
+		</div> -->
+		<input type="submit" value="検索"/>
+		<div>
+<!-- 			<ul th:each="lm : ${hotels}">
+				<li th:each="entry : ${lm[1]['hotelBasicInfo']}" th:text="${entry.key} + ' : ' + ${entry.value}" ></li>
+				<li th:each="entry : ${lm[0]['hotelBasicInfo']}" th:text="${entry.value}"></li>
+			</ul>
+-->
+			<table>
+				<thead>
+					<!-- <th th:each="userhead : ${userhead}" th:text="${userhead.key}"></th>
+					<th th:each="userhead : ${userhead}" th:text="${userhead.value}"></th> -->
+				</thead>
+				<tbody>
+					<tr>
+						<td/>
+						<td th:text="'全体情報: ' + ${simpleHotelSearchResult['pagingInfo']}"/>
+					</tr>
+					<tr>
+						<td th:each="lm : ${simpleHotelSearchResult['hotels']}">
+							<tr>
+								<td th:each="lm1 : ${lm}">
+									<td th:each="entry : ${lm1['hotelBasicInfo']}" th:text="${entry.key} + ' : ' + ${entry.value}"/>
+									<td th:each="entry : ${lm1['hotelRatingInfo']}" th:text="${entry.key} + ' : ' + ${entry.value}"/>
+									<td th:each="entry : ${lm1['hotelFacilitiesInfo']}" th:text="${entry.key} + ' : ' + ${entry.value}"/>
+									<td th:each="entry : ${lm1['hotelPolicyInfo']}" th:text="${entry.key} + ' : ' + ${entry.value}"/>
+									<td th:each="entry : ${lm1['hotelOtherInfo']}" th:text="${entry.key} + ' : ' + ${entry.value}"/>
+								</td>
+							</tr>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</form>
+</body>
+
+</html>

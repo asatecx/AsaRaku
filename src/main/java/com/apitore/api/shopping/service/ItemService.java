@@ -12,4 +12,9 @@ public class ItemService extends BaseService{
 	public String search(List<NameValuePair> params){
 		return doHttpGET("https://api.rms.rakuten.co.jp/es/1.0/item/search", params);
 	}
+
+	public String insert(String xmlRequest){
+		xmlRequest = "<request><itemInsertRequest>"+xmlRequest+"</itemInsertRequest></request>";
+		return doHttpPOSTXML("https://api.rms.rakuten.co.jp/es/1.0/item/insert", xmlRequest);
+	}
 }

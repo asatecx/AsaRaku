@@ -1,6 +1,8 @@
 package com.apitore.api.shopping.base;
+
 import java.nio.charset.Charset;
 import java.util.Base64;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -16,11 +18,15 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
+import org.springframework.context.annotation.Bean;
+import org.springframework.web.client.RestClientException;
+import org.springframework.web.client.RestTemplate;
 
 import com.google.gson.Gson;
-@Service
+
 public class BaseService {
 
 	@Value("${rakuten.webapi.serviceSecret}")
@@ -28,6 +34,15 @@ public class BaseService {
 
 	@Value("${rakuten.webapi.licenseKey}")
 	private String LICENSE_KEY;
+
+	@Bean(name = "rakutenRestTemplate")
+	public RestTemplate getRestTemplate() {
+		return new RestTemplate();
+	}
+
+	@Autowired
+	@Qualifier(value = "rakutenRestTemplate")
+	private RestTemplate restTemplate;
 
 	private final Base64.Encoder encoder = Base64.getEncoder();
 
@@ -43,8 +58,12 @@ public class BaseService {
 		return authHeader;
 	}
 
+	/**
+	* HTTPGET
+	*
+	* @return
+	*/
 	public String doHttpGET(String uri, List<NameValuePair> params) {
-		String result = "";
 		try {
 			CloseableHttpClient client = HttpClients.createDefault();
 			CloseableHttpResponse response = null;
@@ -54,8 +73,8 @@ public class BaseService {
 				httpGet.addHeader("Authorization", getHeader());
 				response = client.execute(httpGet);
 				HttpEntity entity = response.getEntity();
-				result = EntityUtils.toString(entity);
-				System.out.println("★★★レスポンス★★★：" + result);
+				System.out.println("★★★レスポンス★★★：" + EntityUtils.toString(entity));
+				return EntityUtils.toString(entity);
 			} finally {
 				if (response != null) {
 					response.close();
@@ -67,78 +86,97 @@ public class BaseService {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return result;
+		return null;
 	}
 
+	/**
+	* HTTPPOST
+	*
+	* @return
+	*/
+	public String doHttpPOST(String uri, Map<String, Object> param) {
+		try {
+			CloseableHttpClient client = HttpClients.createDefault();
+			CloseableHttpResponse response = null;
+			try {
+				HttpPost httpPost = new HttpPost(uri);
+				httpPost.addHeader("Authorization", getHeader());
+				System.out.println("★★★パラメータ★★★：" + new Gson().toJson(param));
+				httpPost.setEntity(new StringEntity(new Gson().toJson(param),
+						ContentType.create("application/json", "UTF-8")));
 
-    public String doHttpPOST(String uri, Map<String, Object> param) {
-    	String result = "";
-        try {
-            CloseableHttpClient client = HttpClients.createDefault();
-            CloseableHttpResponse response = null;
-            try {
-                HttpPost httpPost = new HttpPost(uri);
-//              httpPost.addHeader(HTTP.CONTENT_TYPE, "application/json;charset=utf-8");
-                httpPost.addHeader("Authorization", getHeader());
-                System.out.println("★★★パラメータ★★★：" + new Gson().toJson(param));
-                httpPost.setEntity(new StringEntity(new Gson().toJson(param),
-                        ContentType.create("application/json", "UTF-8")));
+				response = client.execute(httpPost);
+				HttpEntity entity = response.getEntity();
+				System.out.println("★★★レスポンス★★★：" + EntityUtils.toString(entity));
+				return EntityUtils.toString(entity);
+			} finally {
+				if (response != null) {
+					response.close();
+				}
+				if (client != null) {
+					client.close();
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 
-                response = client.execute(httpPost);
-                HttpEntity entity = response.getEntity();
-                result = EntityUtils.toString(entity);
-                System.out.println("★★★レスポンス★★★：" + result);
-            } finally {
-                if (response != null) {
-                    response.close();
-                }
-                if (client != null) {
-                    client.close();
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return result;
-    }
+	/**
+	* HTTPPOST
+	*
+	* @return
+	*/
+	public String doHttpPOSTXML(String uri, String xmlRequest) {
+		try {
+			CloseableHttpClient client = HttpClients.createDefault();
+			CloseableHttpResponse response = null;
+			try {
+				HttpPost httpPost = new HttpPost(uri);
+				httpPost.addHeader("Authorization", getHeader());
+				System.out.println("★★★パラメータ★★★：" + xmlRequest);
+				httpPost.setEntity(new StringEntity(xmlRequest,
+						ContentType.create("text/xml", "UTF-8")));
 
+				response = client.execute(httpPost);
+				HttpEntity entity = response.getEntity();
 
-//    public String doHttpPOST(String uri, List<NameValuePair> params) {
-//    	String result = "";
-//        try {
-//            CloseableHttpClient client = HttpClients.createDefault();
-//            CloseableHttpResponse response = null;
-//            try {
-//            	ObjectMapper objectMapper = new ObjectMapper();
-//            	Map<String, Object> data = new HashMap<String, Object>();
-//                data.put("dateType", "1");
-//                data.put("startDatetime", "2017-12-14T00:00:00+0900");
-//                data.put("endDatetime", "2018-01-14T00:00:00+0900");
-//                data.put("PaginationRequestModel", "2017-12-14T00:00:00+0900");
-////                data.put("startDatetime", "2017-12-14T00:00:00+0900");
-//
-//                HttpPost httpPost = new HttpPost(uri);
-//                httpPost.addHeader(HTTP.CONTENT_TYPE, "application/json;charset=utf-8");
-//                httpPost.addHeader("Authorization", getHeader());
-//                httpPost.setEntity(new StringEntity(objectMapper.writeValueAsString(data),
-//                        ContentType.create("text/json", "UTF-8")));
-//
-//                response = client.execute(httpPost);
-//                HttpEntity entity = response.getEntity();
-//                result = EntityUtils.toString(entity);
-//                System.out.println(result);
-//            } finally {
-//                if (response != null) {
-//                    response.close();
-//                }
-//                if (client != null) {
-//                    client.close();
-//                }
-//            }
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//        return result;
-//    }
+				System.out.println("★★★レスポンス★★★：" + EntityUtils.toString(entity));
+				return EntityUtils.toString(entity);
+			} finally {
+				if (response != null) {
+					response.close();
+				}
+				if (client != null) {
+					client.close();
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 
+	@SuppressWarnings("unchecked")
+	public Map<String, Object> getResponse(String url, Map<String, String> params){
+		Map<String, Object> response = null;
+		int i = 0;
+		while (i < 5) {
+			try {
+				response = restTemplate.getForObject(url, Map.class, params);
+				break;
+			} catch (RestClientException e) {
+				e.printStackTrace();
+				response = new HashMap<String, Object>();
+				i++;
+			}
+			try {
+				Thread.sleep(500);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+		return response;
+	}
 }
