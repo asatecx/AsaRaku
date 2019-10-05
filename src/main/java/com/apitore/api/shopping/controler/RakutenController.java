@@ -3,7 +3,8 @@ package com.apitore.api.shopping.controler;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -24,7 +25,7 @@ import springfox.documentation.annotations.ApiIgnore;
 @RestController
 @RequestMapping(value = "/rakuten")
 public class RakutenController {
-	private final Logger LOG = Logger.getLogger(RakutenController.class);
+	private final Logger LOG = LoggerFactory.getLogger(AmazonController.class);
 //
 //	@Bean(name = "rakutenRestTemplate")
 //	public RestTemplate getRestTemplate() {

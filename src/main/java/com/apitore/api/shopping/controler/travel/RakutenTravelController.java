@@ -49,17 +49,23 @@ public class RakutenTravelController {
 	@RequestMapping("/travel")
     public String toIndex(Model model, HttpSession session) {
 		Map<String, Object> simpleHotelSearchResult = new HashMap<String, Object>();
+		Map<String, Object> pagingInfo = new HashMap<String, Object>();
+
+		simpleHotelSearchResult.put("pagingInfo", pagingInfo);
 		model.addAttribute("simpleHotelSearchResult", simpleHotelSearchResult);
 
 		cp.setApplicationId(RAKUTEN_APPLICATION_ID);
 		cp.setFormat("json");
 		cp.setFormatVersion(2);
-		ResponseEntity<Map<String, Object>> res = getAreaClassService.getAreaClass(cp);
-		Map<String, Object> areaClass = (Map<String, Object>)res.getBody();
+//		ResponseEntity<Map<String, Object>> res = getAreaClassService.getAreaClass(cp);
+//		Map<String, Object> areaClass = (Map<String, Object>)res.getBody();
+// TODO
+//		ResponseEntity<Map<String, Object>> resZipInfo = zipInfoService.getZipInfoByZipCode();
+//		model.addAttribute("areaClass", areaClass);
 
-		ResponseEntity<Map<String, Object>> resZipInfo = zipInfoService.getZipInfoByZipCode();
-		model.addAttribute("areaClass", areaClass);
-        return "travel/TravelSearch";
+
+		return "travel/product";
+		//return "travel/TravelSearch";
     }
 
 	@RequestMapping(value = "/Travel/SimpleHotelSearch", method = RequestMethod.POST)
@@ -83,7 +89,8 @@ public class RakutenTravelController {
 
 		Map<String, Object> simpleHotelSearchResult = (Map<String, Object>)res.getBody();
 		model.addAttribute("simpleHotelSearchResult", simpleHotelSearchResult);
-		return "travel/TravelSearch";
+		return "travel/product";
+		//return "travel/TravelSearch";
 	}
 
 	@RequestMapping(value = "/private/Travel/SimpleHotelSearch", method = RequestMethod.GET)

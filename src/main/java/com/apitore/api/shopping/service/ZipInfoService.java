@@ -3,8 +3,8 @@ package com.apitore.api.shopping.service;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,14 +16,10 @@ import com.apitore.api.shopping.utils.UrlFormatter;
 @Service
 public class ZipInfoService extends BaseService{
 
-	private final Logger LOG = Logger.getLogger(RakutenController.class);
-
-	@Autowired
-	private CommonService commonService;
+	private final Logger LOG = LoggerFactory.getLogger(RakutenController.class);
 
 	@Value("${zip.endpoint}")
 	private String ENDPOINT;
-
 
 	public ResponseEntity<Map<String, Object>> getZipInfoByZipCode() {
 
@@ -32,7 +28,7 @@ public class ZipInfoService extends BaseService{
 			//共通パラメータ設定
 			params.put("zipcode", "2610011");
 			String url = UrlFormatter.format(ENDPOINT, params);
-			Map<String, Object> response = commonService.getResponse(url, params);
+			Map<String, Object> response = super.getResponse(url, params);
 			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.OK);
 		} catch (IllegalArgumentException e) {
 			LOG.error("IllegalArgumentException", e);

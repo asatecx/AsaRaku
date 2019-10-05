@@ -3,7 +3,8 @@ package com.apitore.api.shopping.controler;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -29,7 +30,7 @@ import yahoo.jp.itemsearch.ResultSet;
 @RestController
 @RequestMapping(value = "/yahoo")
 public class YahooController {
-  private final Logger LOG = Logger.getLogger(YahooController.class);
+  private final Logger LOG = LoggerFactory.getLogger(YahooController.class);
 
 
   @Bean(name="yahooRestTemplate")

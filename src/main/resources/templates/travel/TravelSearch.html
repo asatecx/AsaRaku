@@ -40,27 +40,60 @@
 					<!-- <th th:each="userhead : ${userhead}" th:text="${userhead.key}"></th>
 					<th th:each="userhead : ${userhead}" th:text="${userhead.value}"></th> -->
 				</thead>
-				<tbody>
+				<!-- <tbody>
 					<tr>
 						<td/>
 						<td th:text="'全体情報: ' + ${simpleHotelSearchResult['pagingInfo']}"/>
 					</tr>
 					<tr>
-						<td th:each="lm : ${simpleHotelSearchResult['hotels']}">
-							<tr>
-								<td th:each="lm1 : ${lm}">
-									<td th:each="entry : ${lm1['hotelBasicInfo']}" th:text="${entry.key} + ' : ' + ${entry.value}"/>
-									<td th:each="entry : ${lm1['hotelRatingInfo']}" th:text="${entry.key} + ' : ' + ${entry.value}"/>
-									<td th:each="entry : ${lm1['hotelFacilitiesInfo']}" th:text="${entry.key} + ' : ' + ${entry.value}"/>
-									<td th:each="entry : ${lm1['hotelPolicyInfo']}" th:text="${entry.key} + ' : ' + ${entry.value}"/>
-									<td th:each="entry : ${lm1['hotelOtherInfo']}" th:text="${entry.key} + ' : ' + ${entry.value}"/>
-								</td>
-							</tr>
+						<td>
+							<table>
+								<tr th:each="lm : ${simpleHotelSearchResult['hotels']}">
+									<td th:each="lm1 : ${lm}">
+										<table>
+											<tr>
+												<td th:each="entry : ${lm1['hotelBasicInfo']}" th:text="${entry.key} + ' : ' + ${entry.value}"/>
+												<td th:each="entry : ${lm1['hotelRatingInfo']}" th:text="${entry.key} + ' : ' + ${entry.value}"/>
+												<td th:each="entry : ${lm1['hotelFacilitiesInfo']}" th:text="${entry.key} + ' : ' + ${entry.value}"/>
+												<td th:each="entry : ${lm1['hotelPolicyInfo']}" th:text="${entry.key} + ' : ' + ${entry.value}"/>
+												<td th:each="entry : ${lm1['hotelOtherInfo']}" th:text="${entry.key} + ' : ' + ${entry.value}"/>
+											</tr>
+										</table>
+									</td>
+								</tr>
+							</table>
 						</td>
 					</tr>
-				</tbody>
+				</tbody> -->
 			</table>
 		</div>
+<!--
+		<div>
+			<span th:text="${testMap['1']}"/>
+		</div> -->
+		<div>
+			<span th:text="${simpleHotelSearchResult['pagingInfo']['recordCount']}"></span>
+		</div>
+
+		<div th:each="hotel : ${simpleHotelSearchResult['hotels']}">
+									<div th:each="lm : ${hotel}" >
+										<!-- <div th:each="img : ${lm['hotelBasicInfo']}" > -->
+											<span th:if="${lm['hotelBasicInfo']} == null">★★★★★★★★★★★★★★★★★★★★★★★★★★★</span>
+											<span th:if="${lm['hotelBasicInfo']} != null" th:text="${lm['hotelBasicInfo']['hotelName']}"></span>
+											<!-- <span th:text="${lm['hotelBasicInfo']}"></span> -->
+												<!-- <div th:each="img : ${lm['hotelBasicInfo']}"> -->
+													<!-- <span th:text="${lm['hotelBasicInfo']['hotelName']}"></span> -->
+													<!-- <span th:if="${img.key}=='hotelNo'" th:text="${img.key}+'='+${img.value}"></span> -->
+													<!-- <span th:text="${lm['hotelBasicInfo']['hotelName']}"></span>
+													<span th:text="${lm['hotelBasicInfo']['hotelImageUrl']}"></span> -->
+										<!-- </div> -->
+												<!-- <div th:each="entry : ${lm1['hotelRatingInfo']}" th:text="${entry.key} + ' : ' + ${entry.value}"/>
+												<div th:each="entry : ${lm1['hotelFacilitiesInfo']}" th:text="${entry.key} + ' : ' + ${entry.value}"/>
+												<div th:each="entry : ${lm1['hotelPolicyInfo']}" th:text="${entry.key} + ' : ' + ${entry.value}"/>
+												<div th:each="entry : ${lm1['hotelOtherInfo']}" th:text="${entry.key} + ' : ' + ${entry.value}"/> -->
+
+									</div>
+								</div>
 	</form>
 </body>
 
